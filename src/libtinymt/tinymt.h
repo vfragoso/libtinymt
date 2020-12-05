@@ -11,29 +11,19 @@ public:
   TinyMT();
 
   void Reset();
-
   ResultType Generate();
-
   bool IsPeriodReached() const;
-  ResultType min_value() const;
-  ResultType max_value() const;
+  ResultType MinValue() const;
+  ResultType MaxValue() const;
+
+  // Getters.
+  WordType initial_seed() const {
+    return initial_seed_;
+  }
 
 private:
+  // Initial seed.
   WordType initial_seed_;
-  WordType state_[4];
-  // Multipliers and tempering factors.
-  WordType multiplier1_;
-  WordType multiplier2_;
-  WordType tempering_;
-
-  // Helper functions.
-  void NextState();
-  // Extracts a uint32_t instance from state.
-  WordType ExtractUnsignedIntegerFromState();
-  // Extracts a float instance from state ranging from 0.0f <= number < 1.0f.
-  float ExtractFloatFromState();
-  // Extracts a float instance from state ranging from 0.0 <= number < 1.0.
-  double ExtractDoubleFromState();
 };
 
 }  // namespace mt
