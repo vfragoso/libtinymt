@@ -2,7 +2,7 @@
 # This code is heavily inspired on https://github.com/MersenneTwister-Lab/TinyMT.
 
 cmake_minimum_required(VERSION 3.1)
-project(libtinymt C CXX)
+project(tinymt C CXX)
 
 # Include dirs.
 set(LIBTINYMT_INCLUDE_DIRS src/)
@@ -12,5 +12,5 @@ include_directories(${LIBTINYMT_INCLUDE_DIRS})
 set(LIBTINYMT_SRC src/libtinymt/tinymt.cc)
 
 # Compile gdls* library.
-add_library(libtinymt STATIC ${LIBTINYMT_SRC})
-target_link_libraries(libtinymt)
+add_library(tinymt STATIC ${LIBTINYMT_SRC})
+target_link_libraries(tinymt)
