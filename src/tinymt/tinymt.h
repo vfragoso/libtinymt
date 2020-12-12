@@ -27,6 +27,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#include <limits>
 #include <stdint.h>
 
 namespace mt {
@@ -44,6 +45,10 @@ namespace mt {
 //
 //   TinyMT<uint64_t> prng64(/* initial_seed = */ 11);
 //   const uint64_t random_number_32 = prng64.Generate();
+//
+//   TinyMT<uint32_t> prng;
+//   std::normal_distribution<float> dist;
+//   const float sample = dist(prng);
 template <typename ResultType>
 class TinyMT {
  public:
@@ -57,14 +62,6 @@ class TinyMT {
   // Resets the internal state variables.
   void Reset();
 
-  // The minimum value this PRNG can generate. The minimum value this PRNG can
-  // return is zero.
-  ResultType MinValue() const;
-
-  // The maximum value this PRNG can generate. The maximum value this PRNG can
-  // generate depends on the ResultType either uint32_t and uint64_t.
-  ResultType MaxValue() const;  
-
   // Generates a number in the range [MinValue, MaxValue]. The minimum and
   // maximum values depend on the ResultType and can be obtained by calling
   // MinValue() and MaxValue() functions.
@@ -72,6 +69,27 @@ class TinyMT {
 
   // Gets the initial seed.
   ResultType initial_seed() const;
+
+  // Defining 'result_type' so that TinyMT can be used w/ many of the
+  // distributions in the standard library of C++11 and above standards.
+  typedef ResultType result_type;
+
+  // The maximum value this PRNG can generate. The maximum value this PRNG can
+  // generate depends on the ResultType either uint32_t and uint64_t.
+  static constexpr result_type max() {
+    return std::numeric_limits<result_type>::max();
+  }
+
+  // The minimum value this PRNG can generate. The minimum value this PRNG can
+  // generate depends on the ResultType either uint32_t and uint64_t.
+  static constexpr result_type min() {
+    return std::numeric_limits<result_type>::min();
+  }
+
+  // Generates a random number by calling Generate(); see above.
+  result_type operator()() {
+    return Generate();
+  }
 
  private:
   // Initial seed.

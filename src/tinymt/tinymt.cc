@@ -87,12 +87,12 @@ const uint64_t kTinyMT64SH8 = 8;
 const uint64_t kTinyMT64Mask = static_cast<uint64_t>(0x7fffffffffffffff);
 const uint32_t kDefaultSeed = 1;
 // Minimum and maxium values.
-// Minimum uint32_t value is 0.
-const uint32_t kMinUint32Value = 0;
-// Maximum uint32_t value is 2^32 - 1.
-const uint32_t kMaxUint32Value = static_cast<uint32_t>(0xFFFFFFFF);
-// Maximum uint64_t value is 2^64 - 1.
-const uint64_t kMaxUint64Value = static_cast<uint64_t>(0xFFFFFFFFFFFFFFFF);
+// // Minimum uint32_t value is 0.
+// const uint32_t kMinUint32Value = 0;
+// // Maximum uint32_t value is 2^32 - 1.
+// const uint32_t kMaxUint32Value = static_cast<uint32_t>(0xFFFFFFFF);
+// // Maximum uint64_t value is 2^64 - 1.
+// const uint64_t kMaxUint64Value = static_cast<uint64_t>(0xFFFFFFFFFFFFFFFF);
 // Initial state for 32 bits.
 const uint32_t kDefaultState32[kNumStateEntries32] = {
   /* initial seed = */ kDefaultSeed,
@@ -161,16 +161,6 @@ uint32_t TinyMT<uint32_t>::Generate() {
   return ExtractUnsignedIntegerFromState();
 }
 
-template <>
-uint32_t TinyMT<uint32_t>::MaxValue() const {
-  return kMaxUint32Value;
-}
-
-template <>
-uint32_t TinyMT<uint32_t>::MinValue() const {
-  return kMinUint32Value;
-}
-
 //////////////////////////////
 // Implementation for 64 bits.
 template <>
@@ -221,16 +211,6 @@ template <>
 uint64_t TinyMT<uint64_t>::Generate() {
   NextState();
   return ExtractUnsignedIntegerFromState();
-}
-
-template <>
-uint64_t TinyMT<uint64_t>::MaxValue() const {
-  return kMaxUint64Value;
-}
-
-template <>
-uint64_t TinyMT<uint64_t>::MinValue() const {
-  return static_cast<uint64_t>(kMinUint32Value);
 }
 
 }  // namespace mt

@@ -27,7 +27,10 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#include <cmath>
+#include <random>
 #include <stdint.h>
+#include <vector>
 #include <gtest/gtest.h>
 #include <tinymt/tinymt.h>
 
@@ -36,6 +39,7 @@ namespace {
 // Useful constants.
 constexpr uint32_t kMaxValue32 = 0xFFFFFFFF;
 constexpr uint64_t kMaxValue64 = 0xFFFFFFFFFFFFFFFF;
+constexpr size_t kNumSamples = 10000;
 
 // Test the generated sequences from the authors.
 // https://github.com/MersenneTwister-Lab/TinyMT/blob/master/tinymt/check32.out.txt.
@@ -66,30 +70,51 @@ const uint64_t kExpectedUint64SequenceWithDefaultSeed[] = {
 
 TEST(TinyMTTest, UniformDistributionUsingUnsignedInts32) {
   TinyMT<uint32_t> prng;
-  EXPECT_EQ(prng.MinValue(), 0);
-  EXPECT_EQ(prng.MaxValue(), kMaxValue32);
+  EXPECT_EQ(TinyMT<uint32_t>::min(), 0);
+  EXPECT_EQ(TinyMT<uint32_t>::max(), kMaxValue32);
   const size_t num_samples =
       sizeof(kExpectedUint32SequenceWithDefaultSeed) / sizeof(uint32_t);
   for (size_t i = 0; i < num_samples; ++i) {
     const uint32_t random_value = prng.Generate();
-    EXPECT_LE(random_value, prng.MaxValue());
-    EXPECT_GE(random_value, prng.MinValue());
+    EXPECT_GE(random_value, 0);
+    EXPECT_LE(random_value, kMaxValue32);
     EXPECT_EQ(random_value, kExpectedUint32SequenceWithDefaultSeed[i]);
   }
 }
 
 TEST(TinyMTTest, UniformDistributionUsingUnsignedInts64) {
   TinyMT<uint64_t> prng;
-  EXPECT_EQ(prng.MinValue(), 0);
-  EXPECT_EQ(prng.MaxValue(), kMaxValue64);
+  EXPECT_EQ(TinyMT<uint64_t>::min(), static_cast<uint64_t>(0));
+  EXPECT_EQ(TinyMT<uint64_t>::max(), kMaxValue64);
   const size_t num_samples =
       sizeof(kExpectedUint64SequenceWithDefaultSeed) / sizeof(uint64_t);
   for (size_t i = 0; i < num_samples; ++i) {
     const uint64_t random_value = prng.Generate();
-    EXPECT_LE(random_value, prng.MaxValue());
-    EXPECT_GE(random_value, prng.MinValue());
+    EXPECT_GE(random_value, static_cast<uint64_t>(0));
+    EXPECT_LE(random_value, kMaxValue64);
     EXPECT_EQ(random_value, kExpectedUint64SequenceWithDefaultSeed[i]);    
   }
+}
+
+TEST(TinyMTTest, StandardNormalDistribution) {
+  TinyMT<uint32_t> prng(11);
+  std::normal_distribution<float> dist;
+  std::vector<float> samples;
+  float mean = 0.0f;
+  for (size_t i = 0; i < kNumSamples; ++i) {
+    samples.push_back(dist(prng));
+    mean += samples.back();
+  }
+  mean /= samples.size();
+  EXPECT_NEAR(0.0f, mean, 0.1);
+  float std_dev = 0.0f;
+  for (const float sample : samples) {
+    const float deviation = mean - sample;
+    std_dev += deviation * deviation;
+  }
+  std_dev /= samples.size();
+  std_dev = std::sqrtf(std_dev);
+  EXPECT_NEAR(1.0f, std_dev, 0.1);
 }
 
 }  // namespace
