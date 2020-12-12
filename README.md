@@ -5,3 +5,6 @@ This code implements TinyMT for 32 and 64 bits using C++ classes and it is heavi
 
 # LICENSE
 This project uses the 3-Clause BSD license. See [LICENSE](LICENSE) file for more information.
+
+# NOTICE
+This project includes components from TinyMT. For more licensing information see the [NOTICE](NOTICE) file.
