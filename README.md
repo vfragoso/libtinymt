@@ -1,5 +1,3 @@
-[CMake Build](https://github.com/vfragoso/libtinymt/workflows/cmake.yml/badge.svg)
-
 # libtinymt
 TinyMT is an efficient MersenneTwister pseudo random number generator proposed by Mutsuo Saito (Hiroshima University) and Makoto Matsumoto (The University of Tokyo).
 
