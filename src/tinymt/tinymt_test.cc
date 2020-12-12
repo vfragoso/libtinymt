@@ -85,7 +85,7 @@ TEST(TinyMTTest, UniformDistributionUsingUnsignedInts64) {
   const size_t num_samples =
       sizeof(kExpectedUint64SequenceWithDefaultSeed) / sizeof(uint64_t);
   for (size_t i = 0; i < num_samples; ++i) {
-    const uint32_t random_value = prng.Generate();
+    const uint64_t random_value = prng.Generate();
     EXPECT_LE(random_value, prng.MaxValue());
     EXPECT_GE(random_value, prng.MinValue());
     EXPECT_EQ(random_value, kExpectedUint64SequenceWithDefaultSeed[i]);    
