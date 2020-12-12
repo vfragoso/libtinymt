@@ -27,8 +27,11 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#include <limits>
+#ifndef TINYMT_TINYMT_H_
+#define TINYMT_TINYMT_H_
+
 #include <stdint.h>
+#include <limits>
 
 namespace mt {
 
@@ -107,11 +110,11 @@ class TinyMT {
   void NextState();
 
   // Extracts an unsigned integer from state.
-  ResultType ExtractUnsignedIntegerFromState();  
+  ResultType ExtractUnsignedIntegerFromState();
 };
 
 // Implementation.
-template <typename ResultType> 
+template <typename ResultType>
 TinyMT<ResultType>::TinyMT(ResultType seed) : initial_seed_(seed) {
   Reset();
 }
@@ -127,3 +130,6 @@ ResultType TinyMT<ResultType>::initial_seed() const {
 }
 
 }  // namespace mt
+
+#endif  // TINYMT_TINYMT_H_
+

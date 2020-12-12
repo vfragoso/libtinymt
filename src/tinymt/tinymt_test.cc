@@ -27,9 +27,9 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#include <stdint.h>
 #include <cmath>
 #include <random>
-#include <stdint.h>
 #include <vector>
 #include <gtest/gtest.h>
 #include <tinymt/tinymt.h>
