@@ -60,7 +60,7 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include <libtinymt/tinymt.h>
+#include <tinymt/tinymt.h>
 #include <algorithm>
 
 namespace mt {
@@ -145,12 +145,6 @@ void TinyMT<uint32_t>::Reset() {
 }
 
 template <>
-inline bool TinyMT<uint32_t>::IsPeriodReached() const {
-  return ((state_[0] & kTinyMT32Mask) == 0 &&
-          state_[1] == 0 && state_[2] == 0 && state_[3] == 0);
-}
-
-template <>
 inline uint32_t TinyMT<uint32_t>::ExtractUnsignedIntegerFromState() {
   uint32_t outputInteger = state_[3];
   uint32_t temp = state_[0] + (state_[2] >> kTinyMT32SH8);
@@ -211,11 +205,6 @@ void TinyMT<uint64_t>::Reset() {
         i + kInitialFactor64 *
         (state_[(i - 1) & 1] ^ (state_[(i - 1) & 1] >> 62));
   }
-}
-
-template <>
-inline bool TinyMT<uint64_t>::IsPeriodReached() const {
-  return ((state_[0] & kTinyMT64Mask) == 0 && state_[1] == 0);
 }
 
 template <>
