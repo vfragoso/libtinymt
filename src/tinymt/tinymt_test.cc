@@ -28,7 +28,6 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #include <stdint.h>
-#include <cmath>
 #include <random>
 #include <vector>
 #include <gtest/gtest.h>
@@ -107,14 +106,13 @@ TEST(TinyMTTest, StandardNormalDistribution) {
   }
   mean /= samples.size();
   EXPECT_NEAR(0.0f, mean, 0.1);
-  float std_dev = 0.0f;
+  float variance = 0.0f;
   for (const float sample : samples) {
     const float deviation = mean - sample;
-    std_dev += deviation * deviation;
+    variance += deviation * deviation;
   }
-  std_dev /= samples.size();
-  std_dev = std::sqrtf(std_dev);
-  EXPECT_NEAR(1.0f, std_dev, 0.1);
+  variance /= samples.size() - 1.0f;
+  EXPECT_NEAR(1.0f, variance, 0.1);
 }
 
 }  // namespace
