@@ -68,7 +68,6 @@ namespace {
 
 // Useful constants.
 const size_t kNumStateEntries32 = 4;
-const size_t kNumStateEntries64 = 2;
 const size_t kInitialLoopIterations = 8;
 const size_t kUpdateStateIterations = 8;
 const uint64_t kMultiplier164 = static_cast<uint64_t>(0xfa051f40);

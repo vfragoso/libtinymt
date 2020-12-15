@@ -65,9 +65,9 @@ class TinyMT {
   // Resets the internal state variables.
   void Reset();
 
-  // Generates a number in the range [MinValue, MaxValue]. The minimum and
+  // Generates a number in the range [min(), max()]. The minimum and
   // maximum values depend on the ResultType and can be obtained by calling
-  // MinValue() and MaxValue() functions.
+  // min() and max() functions; see below.
   ResultType Generate();
 
   // Gets the initial seed.
